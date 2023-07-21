@@ -1,0 +1,9 @@
+POST http://localhost:3001/updateUserData
+Content-Type: application/json
+
+{
+    "playerId": "steam_2",
+    "column": "Player",
+    "atomic_value": "lastname",
+    "value": "test123"
+}

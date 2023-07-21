@@ -1,0 +1,19 @@
+POST http://localhost:3001/addPlugins
+Content-Type: application/json
+
+{
+    "plugins": {
+        "krp_bank": {
+            "account_id": null,
+            "tranfert_pending": {}
+        },
+
+        "krp_pets": {
+            "pets": {}
+        },
+        
+        "krp_hou": {
+            "hou": {}
+        }
+    }
+}

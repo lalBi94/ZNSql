@@ -1,0 +1,6 @@
+POST http://localhost:3001/getUserDatas
+Content-Type: application/json
+
+{
+    "playerId": "steam_2"
+}
