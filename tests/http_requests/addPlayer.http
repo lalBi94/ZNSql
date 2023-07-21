@@ -1,0 +1,28 @@
+POST http://localhost:3001/addPlayer
+Content-Type: application/json
+
+{
+    "infos": {
+        "identifier": "steam_1002",
+        "creation": "02/25/2004",
+        "firstname": "Newton",
+        "lastname": "Isaac",
+        "lastPos": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+        },
+        "clothes": {},
+        "accounts": {
+            "money": 32434324,
+            "bank": 3244324,
+            "black_money": 34234232
+        },
+        "vehicles": [
+            {
+                "name": "adder"
+            }
+        ]
+    }, 
+    "template": "/Users/bilal/Desktop/ZNSql/ZODNSql/templates/base_db.json"
+}

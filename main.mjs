@@ -45,3 +45,9 @@ app.post("/addPlugins", async (req, res) => {
     const data = await ZSQL.addPlugins(plugins)
     !data ? res.json(false) : res.json(true)
 })
+
+app.post("/addPlayer", async (req, res) => {
+    const {infos, template, plugins} = req.body
+    const data = await ZSQL.addPlayer(infos, template, plugins)
+    !data ? res.json(false) : res.json(true)
+})

@@ -1,0 +1,19 @@
+{
+    "Player": {
+        "creation": "00-00-0000",
+        "firstname": "unknown",
+        "lastname": "unknown",
+        "lastPos": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+        },
+        "clothes": {},
+        "accounts": {
+            "money": 0,
+            "bank": 0,
+            "black_money": 0
+        },
+        "vehicles": []
+    }
+}

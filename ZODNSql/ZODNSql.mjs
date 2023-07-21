@@ -9,7 +9,7 @@ export default class ZODNSql {
     }
 
    /**
-    * Set connection to the json
+    * Set connection to database
     * @param {string} database Link to the json
     * @return {{}}
     */
@@ -29,7 +29,7 @@ export default class ZODNSql {
     }
 
     /**
-    * Disconnected
+    * Disconnect database
     * @return {boolean}
     */
     async disconnect() {
@@ -69,7 +69,7 @@ export default class ZODNSql {
     }
 
     /**
-     * 
+     * Update a specify atomic value
      * @param {string} player_id 
      * @param {string} column 
      * @param {string} atomic_value 
@@ -78,8 +78,9 @@ export default class ZODNSql {
      */
     async updateValue(player_id, column, atomic_value, value) {
         if(this.database && this.url) {
-            const file = await this.loadFile(this.url)
+            const file = {...this.database}
             file[player_id][column][atomic_value] = value
+            this.database = file
 
             await fs.writeFile(this.url, JSON.stringify(file), (err) => {
                 if(err) {
@@ -96,12 +97,12 @@ export default class ZODNSql {
     }
 
     /**
+     * Add somes customs plugins in db
      * @param {{plugins:{}}} plugins The plugins list
      * @return {Promise<boolean>}
      */
     async addPlugins(plugins) {
         if(this.database && this.url.length > 0) {
-            console.time()
             const file = {...this.database}
             
             for(let p in file) {
@@ -126,16 +127,64 @@ export default class ZODNSql {
 
             return new Promise((resolve, reject) => {
                 this.database = file
-                console.timeEnd()
                 resolve(true)
             })
         }
     }
 
     /**
-    * @param {string} source The dist/local file path.
-    * @return {{}}
-    */
+     * Add new player (Player up-value is required)
+     * @param {{indentifier: string, creation: string, firstname: string, 
+     *          lastname: string, lastPos: {x: number, y: number, z: number}, clothes: {},
+     *          accounts: {money: number, bank: number, black_money: number
+     *          vehicles: []}?}} data The specifics datas for the creation.
+     * @param {string} template The url of the template users
+     * @param {{}?} plugins If you have some plugins
+     * @return {Promise<boolean>}
+     */
+    async addPlayer(data, template, plugins) {
+        const templateData = await this.loadFile(template)
+        const file = {...this.database}
+
+        if(data) {
+            const { creation, firstname, lastname, lastPos, 
+                clothes, accounts, vehicles } = data
+
+            templateData.Player.creation = creation
+            templateData.Player.firstname = firstname
+            templateData.Player.lastname = lastname
+            templateData.Player.lastPos = lastPos
+            templateData.Player.clothes = clothes
+            templateData.Player.accounts = accounts
+            templateData.Player.vehicles = vehicles
+        }
+
+        file[data.identifier] = templateData
+
+        if(plugins) {
+            await this.addPlugins(plugins)
+        }
+
+        await fs.writeFile(this.url, JSON.stringify(file), (err) => {
+            if(err) {
+                return new Promise((resolve, reject) => {
+                    reject("Failed to add new player")
+                })
+            }
+        })
+
+        this.database = file
+
+        return new Promise((resolve, reject) => {
+            resolve(true)
+        })
+    }
+
+    /**
+     * Load file from anywhere
+     * @param {string} source The dist/local file path.
+     * @return {{}}
+     */
     async loadFile(source) {
         if (source.startsWith('http://') || source.startsWith('https://')) {
             const response = await axios.get(source);
