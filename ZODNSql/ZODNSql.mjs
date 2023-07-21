@@ -101,30 +101,32 @@ export default class ZODNSql {
      */
     async addPlugins(plugins) {
         if(this.database && this.url.length > 0) {
-            const file = await this.loadFile(this.url)
+            console.time()
+            const file = {...this.database}
             
             for(let p in file) {
                 for(let e in plugins) {
                     if(!file[p][e]) {
                         file[p][e] = plugins[e]
-                        console.log(JSON.stringify(file))
-
-                        await fs.writeFile(this.url, JSON.stringify(file), (err) => {
-                            if(err) {
-                                return new Promise((resolve, reject) => { 
-                                    reject(red("Failed to load ur script"))
-                                })
-                            }
-                        })
-                    }
+                    } 
                 }
             }
+
+            await fs.writeFile(this.url, JSON.stringify(file), (err) => {
+                if(err) {
+                    return new Promise((resolve, reject) => { 
+                        reject(red("Failed to load ur script"))
+                    })
+                }
+            })
 
             for(let e in plugins) {
                 console.info(green(`${e} started.`))
             }
 
             return new Promise((resolve, reject) => {
+                this.database = file
+                console.timeEnd()
                 resolve(true)
             })
         }

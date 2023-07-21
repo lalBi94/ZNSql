@@ -14,6 +14,10 @@ Content-Type: application/json
         
         "krp_hou": {
             "hou": {}
+        },
+        
+        "slik_off_le_moche": {
+            "sex_appeal": 0
         }
     }
 }
