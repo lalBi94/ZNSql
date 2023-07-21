@@ -14,8 +14,10 @@ app.use(express.json());
 app.listen(PORT, () => {
     console.log(magenta(
         `?----------------------------------------?\n` +
+        `| Welcome in the new world, ZODNSql !    |\n` +
         `| Owner: General Zod (bilaaaaaaal)       |\n` +
         `| Discord: https://discord.gg/xpCc6XmUaX |\n` +
+        `| Listen on localhost:${PORT}               |\n` +
         `?----------------------------------------?`
     ))
 })
