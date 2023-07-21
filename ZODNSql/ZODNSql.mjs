@@ -161,10 +161,6 @@ export default class ZODNSql {
 
         file[data.identifier] = templateData
 
-        if(plugins) {
-            await this.addPlugins(plugins)
-        }
-
         await fs.writeFile(this.url, JSON.stringify(file), (err) => {
             if(err) {
                 return new Promise((resolve, reject) => {
@@ -174,6 +170,10 @@ export default class ZODNSql {
         })
 
         this.database = file
+
+        if(plugins) {
+            await this.addPlugins(plugins)
+        }
 
         return new Promise((resolve, reject) => {
             resolve(true)

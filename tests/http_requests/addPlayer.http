@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
     "infos": {
-        "identifier": "steam_1002",
+        "identifier": "steaffffm_1002",
         "creation": "02/25/2004",
         "firstname": "Newton",
         "lastname": "Isaac",
@@ -24,5 +24,23 @@ Content-Type: application/json
             }
         ]
     }, 
-    "template": "/Users/bilal/Desktop/ZNSql/ZODNSql/templates/base_db.json"
+    "template": "/Users/bilal/Desktop/ZNSql/ZODNSql/templates/base_db.json",
+    "plugins": {
+        "krp_bank": {
+            "account_id": null,
+            "tranfert_pending": {}
+        },
+
+        "krp_pets": {
+            "pets": {}
+        },
+        
+        "krp_hou": {
+            "hou": {}
+        },
+        
+        "slik_off_le_moche": {
+            "sex_appeal": 0
+        }
+    }
 }
