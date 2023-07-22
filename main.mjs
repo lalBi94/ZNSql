@@ -7,7 +7,7 @@ const PATHS = {
     DB: "/Users/bilal/Desktop/ZNSql/ZODNSql/database/players.json",
     PLAYER_DATA: "/Users/bilal/Desktop/ZNSql/ZODNSql/database/schemas/player_data.json",
     VEHICLE_DATA: "/Users/bilal/Desktop/ZNSql/ZODNSql/database/schemas/vehicle_data.json",
-    PLUGINS: "/USERS/bilal/Desktop/ZNSql/ZODNSql/database/plugins.json",
+    PLUGINS: "/Users/bilal/Desktop/ZNSql/ZODNSql/database/plugins.json",
 }
 
 const ZSQL = new ZODNSql()
