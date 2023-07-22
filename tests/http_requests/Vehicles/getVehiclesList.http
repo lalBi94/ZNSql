@@ -1,0 +1,6 @@
+POST http://localhost:3001/getVehiclesList
+Content-Type: application/json
+
+{
+    "playerId": "fivem:787432"
+}

@@ -1,0 +1,11 @@
+POST http://localhost:3001/addPlayer
+Content-Type: application/json
+
+{
+    "infos": {
+        "identifier": "fivem:787432",
+        "creation": "25/05/2033",
+        "firstname": "Wang",
+        "lastname": "Ling"
+    }
+}

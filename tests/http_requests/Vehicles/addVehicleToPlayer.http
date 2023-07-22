@@ -1,0 +1,7 @@
+POST http://localhost:3001/addVehicleToPlayer
+Content-Type: application/json
+
+{
+    "playerId": "fivem:787432",
+    "name": "bmx"
+}

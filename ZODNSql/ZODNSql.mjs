@@ -10,8 +10,9 @@ export default class ZODNSql {
 
    /**
     * Set connection to database
-    * @param {string} database Link to the json
-    * @return {{}}
+    * @param {string} database_link Link to the json file contains players database
+    * @param {string} plugins_link Link to the json file contains plugins
+    * @return {Promise<boolean>}
     */
     async connect(database_link, plugins_link) {
         const data = await this.loadFile(database_link)
@@ -21,6 +22,10 @@ export default class ZODNSql {
         if(this.database && this.url && plugins_link) {
             const plugins = await this.loadFile(plugins_link)
             await this.addPlugins(plugins)
+
+            for(let e in plugins) {
+                console.info(green(`${e} started.`))
+            }
         }
 
         return new Promise((resolve, reject) => {
@@ -35,7 +40,7 @@ export default class ZODNSql {
 
     /**
     * Disconnect database
-    * @return {boolean}
+    * @return {Promise<boolean>}
     */
     async disconnect() {
         return new Promise((resolve, reject) => {
@@ -126,10 +131,6 @@ export default class ZODNSql {
                 }
             })
 
-            for(let e in plugins) {
-                console.info(green(`${e} started.`))
-            }
-
             return new Promise((resolve, reject) => {
                 this.database = file
                 resolve(true)
@@ -142,7 +143,7 @@ export default class ZODNSql {
      * @param {{indentifier: string, creation: string, firstname: string, 
      *          lastname: string}?}} data The specifics datas for the creation.
      * @param {string} template The url of the template users
-     * @param {{}?} plugins If you have some plugins
+     * @param {{}?} plugins_link If you have some plugins
      * @return {Promise<boolean>}
      */
     async addPlayer(data, template, plugins_link) {
@@ -169,8 +170,117 @@ export default class ZODNSql {
 
         this.database = file
 
-        const plugins = await this.loadFile(plugins_link)
-        await this.addPlugins(plugins)
+        if(plugins_link) {
+            const plugins = await this.loadFile(plugins_link)
+            await this.addPlugins(plugins)
+        }
+
+        return new Promise((resolve, reject) => {
+            resolve(true)
+        })
+    }
+
+    /**
+     * Get the vehicles list
+     * @param {{string}} player_id 
+     * @return {Promise<[]>}
+     */
+    async getVehiclesList(player_id) {
+        return new Promise((resolve, reject) => {
+            if(!this.database[player_id]) {
+                reject(red(`Player ${player_id} doesn't exist.`))
+            } else {
+                resolve(this.database[player_id]["Vehicles"])
+            }
+        })
+    }
+
+    async deleteVehicleToPlayer(player_id, plate) {
+        if(!this.database[player_id]) {
+            return new Promise((resolve, reject) => {
+                reject(red(`Player ${player_id} doesnt exist`))
+            })
+        }
+
+        if(this.database[player_id]["Vehicles"].length === 0) {
+            return new Promise((resolve, reject) => {
+                reject(red(`Player ${player_id} doesnt have vehicles`))
+            })
+        }
+
+        const file = {...this.database}
+        let vehicles = this.database[player_id]["Vehicles"]
+        
+        for (let i = vehicles.length - 1; i >= 0; i--) {
+          if (vehicles[i].plate === plate) {
+            vehicles.splice(i, 1)
+
+            file[player_id]["Vehicles"] = vehicles
+            
+            await fs.writeFile(this.url, JSON.stringify(file), (err) => {
+                if(err) {
+                    return new Promise((resolve, reject) => {
+                        reject(red(`Failed to suppress ${vehicles[i].name}`))
+                    })
+                }
+            })
+
+            this.database = file
+            
+            return new Promise((resolve, reject) => {
+                resolve(true)
+            })
+          }
+        }
+    }
+
+    /**
+     * Adding a new vehicle to a player
+     * @param {string} player_id The player indentifier
+     * @param {string} vehicle_name The vehicle name
+     * @param {string} vehicle_link The vehicle template link
+     * @return {Promise<boolean}
+     */
+    async addVehicleToPlayer(player_id, vehicle_name, vehicle_link) {
+        if(!this.database[player_id]) {
+            return new Promise((resolve, reject) => {
+                reject(red(`${player_id} doesnt exist`))
+            })
+        }
+
+        const generatePlate = async () => {
+            return new Promise((resolve, reject) => {
+                const ac = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+                let word = '';
+                for (let i = 0; i <= 10; i++) {
+                    if (i === 3 || i === 7) {
+                        word += '-';
+                    } else {
+                        word += ac[Math.floor(Math.random() * ac.length)];
+                    }
+                }
+
+                resolve(word)
+            })
+        }
+
+        const file = {...this.database}
+        const vehicle = await this.loadFile(vehicle_link)
+        vehicle.name = vehicle_name
+        vehicle.plate = await generatePlate()
+        console.log(vehicle.plate)
+        
+        file[player_id]["Vehicles"].push(vehicle)
+
+        await fs.writeFile(this.url, JSON.stringify(file), (err) => {
+            if(err) {
+                return new Promise((resolve, reject) => {
+                    reject(red("Failed to adding vehicle to ${player_id}"))
+                })
+            }
+        })
+
+        this.database = file
 
         return new Promise((resolve, reject) => {
             resolve(true)
@@ -192,7 +302,7 @@ export default class ZODNSql {
             const data = await fs.promises.readFile(source, 'utf-8');
             return new Promise((resolve, reject) => {
                 resolve(JSON.parse(data))
-            });
+            })
         }
     }
 }

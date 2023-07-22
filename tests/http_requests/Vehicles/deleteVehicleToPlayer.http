@@ -1,0 +1,7 @@
+POST http://localhost:3001/deleteVehicleToPlayer
+Content-Type: application/json
+
+{
+    "playerId": "fivem:787432",
+    "plate": "1VA-RJ1-2O7"
+}

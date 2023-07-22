@@ -6,6 +6,7 @@ import { magenta } from "console-log-colors"
 const PATHS = {
     DB: "/Users/bilal/Desktop/ZNSql/ZODNSql/database/players.json",
     PLAYER_DATA: "/Users/bilal/Desktop/ZNSql/ZODNSql/database/schemas/player_data.json",
+    VEHICLE_DATA: "/Users/bilal/Desktop/ZNSql/ZODNSql/database/schemas/vehicle_data.json",
     PLUGINS: "/USERS/bilal/Desktop/ZNSql/ZODNSql/database/plugins.json",
 }
 
@@ -28,9 +29,18 @@ app.listen(PORT, () => {
     ))
 })
 
+/*****************
+* GENERICS CALLS *
+*****************/
 app.post("/getUserData", async (req, res) => {
     const {playerId, column, value} = req.body
     const data = await ZSQL.fetch(playerId, column, value)
+    res.json(data)
+})
+
+app.post("/addPlayer", async (req, res) => {
+    const {infos} = req.body
+    const data = await ZSQL.addPlayer(infos, PATHS.PLAYER_DATA, PATHS.PLUGINS)
     res.json(data)
 })
 
@@ -43,17 +53,32 @@ app.post("/getUserDatas", async (req, res) => {
 app.post("/updateUserData", async (req, res) => {
     const {playerId, column, atomic_value, value} = req.body
     const data = await ZSQL.updateValue(playerId, column, atomic_value, value)
-    !data ? res.json(false) : res.json(true)
+    res.json(data)
 })
 
 app.post("/addPlugins", async (req, res) => {
     const {plugins} = req.body
     const data = await ZSQL.addPlugins(plugins)
-    !data ? res.json(false) : res.json(true)
+    res.json(data)
 })
 
-app.post("/addPlayer", async (req, res) => {
-    const {infos} = req.body
-    const data = await ZSQL.addPlayer(infos, PATHS.PLAYER_DATA, PATHS.PLUGINS)
-    !data ? res.json(false) : res.json(true)
+/*****************
+* VEHICLES CALLS *
+******************/
+app.post("/getVehiclesList", async (req, res) => {
+    const {playerId} = req.body
+    const data = await ZSQL.getVehiclesList(playerId)
+    res.json(data)
+})
+
+app.post("/addVehicleToPlayer", async (req, res) => {
+    const {playerId, name} = req.body
+    const data = await ZSQL.addVehicleToPlayer(playerId, name, PATHS.VEHICLE_DATA)
+    res.json(data)
+})
+
+app.post("/deleteVehicleToPlayer", async (req, res) => {
+    const {playerId, plate} = req.body
+    const data = await ZSQL.deleteVehicleToPlayer(playerId, plate)
+    res.json(data)
 })
