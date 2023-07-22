@@ -1,0 +1,18 @@
+{
+    "krp_bank": {
+        "account_id": null,
+        "tranfert_pending": {}
+    },
+
+    "krp_pets": {
+        "pets": {}
+    },
+    
+    "krp_hou": {
+        "hou": {}
+    },
+    
+    "slik_off_le_moche": {
+        "sex_appeal": 0
+    }
+}

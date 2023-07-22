@@ -13,7 +13,7 @@
             "money": 0,
             "bank": 0,
             "black_money": 0
-        },
-        "vehicles": []
-    }
+        }
+    },
+    "Vehicles": []
 }

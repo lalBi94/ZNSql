@@ -3,8 +3,14 @@ import express from "express"
 import cors from "cors"
 import { magenta } from "console-log-colors"
 
+const PATHS = {
+    DB: "/Users/bilal/Desktop/ZNSql/ZODNSql/database/players.json",
+    PLAYER_DATA: "/Users/bilal/Desktop/ZNSql/ZODNSql/database/schemas/player_data.json",
+    PLUGINS: "/USERS/bilal/Desktop/ZNSql/ZODNSql/database/plugins.json",
+}
+
 const ZSQL = new ZODNSql()
-ZSQL.connect("/Users/bilal/Desktop/ZNSql/tests/db_exemple.json")
+ZSQL.connect(PATHS.DB, PATHS.PLUGINS)
 
 const PORT = 3001
 const app = express()
@@ -47,7 +53,7 @@ app.post("/addPlugins", async (req, res) => {
 })
 
 app.post("/addPlayer", async (req, res) => {
-    const {infos, template, plugins} = req.body
-    const data = await ZSQL.addPlayer(infos, template, plugins)
+    const {infos} = req.body
+    const data = await ZSQL.addPlayer(infos, PATHS.PLAYER_DATA, PATHS.PLUGINS)
     !data ? res.json(false) : res.json(true)
 })

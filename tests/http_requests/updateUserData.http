@@ -2,7 +2,7 @@ POST http://localhost:3001/updateUserData
 Content-Type: application/json
 
 {
-    "playerId": "steam_2",
+    "playerId": "fivem:867432",
     "column": "Player",
     "atomic_value": "lastname",
     "value": "tesfesfseft123"

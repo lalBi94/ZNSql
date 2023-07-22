@@ -13,10 +13,15 @@ export default class ZODNSql {
     * @param {string} database Link to the json
     * @return {{}}
     */
-    async connect(database) {
-        const data = await this.loadFile(database)
+    async connect(database_link, plugins_link) {
+        const data = await this.loadFile(database_link)
         this.database = data
-        this.url = database
+        this.url = database_link
+
+        if(this.database && this.url && plugins_link) {
+            const plugins = await this.loadFile(plugins_link)
+            await this.addPlugins(plugins)
+        }
 
         return new Promise((resolve, reject) => {
             if(this.database && this.url) {
@@ -135,28 +140,21 @@ export default class ZODNSql {
     /**
      * Add new player (Player up-value is required)
      * @param {{indentifier: string, creation: string, firstname: string, 
-     *          lastname: string, lastPos: {x: number, y: number, z: number}, clothes: {},
-     *          accounts: {money: number, bank: number, black_money: number
-     *          vehicles: []}?}} data The specifics datas for the creation.
+     *          lastname: string}?}} data The specifics datas for the creation.
      * @param {string} template The url of the template users
      * @param {{}?} plugins If you have some plugins
      * @return {Promise<boolean>}
      */
-    async addPlayer(data, template, plugins) {
+    async addPlayer(data, template, plugins_link) {
         const templateData = await this.loadFile(template)
         const file = {...this.database}
 
         if(data) {
-            const { creation, firstname, lastname, lastPos, 
-                clothes, accounts, vehicles } = data
+            const { creation, firstname, lastname } = data
 
             templateData.Player.creation = creation
             templateData.Player.firstname = firstname
             templateData.Player.lastname = lastname
-            templateData.Player.lastPos = lastPos
-            templateData.Player.clothes = clothes
-            templateData.Player.accounts = accounts
-            templateData.Player.vehicles = vehicles
         }
 
         file[data.identifier] = templateData
@@ -171,9 +169,8 @@ export default class ZODNSql {
 
         this.database = file
 
-        if(plugins) {
-            await this.addPlugins(plugins)
-        }
+        const plugins = await this.loadFile(plugins_link)
+        await this.addPlugins(plugins)
 
         return new Promise((resolve, reject) => {
             resolve(true)

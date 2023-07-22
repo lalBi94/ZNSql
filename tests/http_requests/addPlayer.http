@@ -3,44 +3,9 @@ Content-Type: application/json
 
 {
     "infos": {
-        "identifier": "steaffffm_1002",
-        "creation": "02/25/2004",
-        "firstname": "Newton",
-        "lastname": "Isaac",
-        "lastPos": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-        },
-        "clothes": {},
-        "accounts": {
-            "money": 32434324,
-            "bank": 3244324,
-            "black_money": 34234232
-        },
-        "vehicles": [
-            {
-                "name": "adder"
-            }
-        ]
-    }, 
-    "template": "/Users/bilal/Desktop/ZNSql/ZODNSql/templates/base_db.json",
-    "plugins": {
-        "krp_bank": {
-            "account_id": null,
-            "tranfert_pending": {}
-        },
-
-        "krp_pets": {
-            "pets": {}
-        },
-        
-        "krp_hou": {
-            "hou": {}
-        },
-        
-        "slik_off_le_moche": {
-            "sex_appeal": 0
-        }
+        "identifier": "fivem:867432",
+        "creation": "25/05/2013",
+        "firstname": "Onde",
+        "lastname": "Folie"
     }
 }
