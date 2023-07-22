@@ -15,5 +15,10 @@
             "black_money": 0
         }
     },
-    "Vehicles": []
+    "Vehicles": [],
+    "Inventory": {
+        "capacity": 50,
+        "items": [],
+        "weapons": []
+    }
 }
