@@ -4,10 +4,10 @@ import cors from "cors"
 import { magenta } from "console-log-colors"
 
 const PATHS = {
-    DB: "/Users/bilal/Desktop/ZNSql/ZODNSql/database/players.json",
-    PLAYER_DATA: "/Users/bilal/Desktop/ZNSql/ZODNSql/database/schemas/player_data.json",
-    VEHICLE_DATA: "/Users/bilal/Desktop/ZNSql/ZODNSql/database/schemas/vehicle_data.json",
-    PLUGINS: "/Users/bilal/Desktop/ZNSql/ZODNSql/database/plugins.json",
+    DB: "C:/Users/tipha/OneDrive/Bureau/BilouWorks/ZODNSql/ZODNSql/database/players.json",
+    PLAYER_DATA: "C:/Users/tipha/OneDrive/Bureau/BilouWorks/ZODNSql/ZODNSql/database/schemas/player_data.json",
+    VEHICLE_DATA: "C:/Users/tipha/OneDrive/Bureau/BilouWorks/ZODNSql/ZODNSql/database/schemas/vehicle_data.json",
+    PLUGINS: "C:/Users/tipha/OneDrive/Bureau/BilouWorks/ZODNSql/ZODNSql/database/plugins.json",
 }
 
 const ZSQL = new ZODNSql()

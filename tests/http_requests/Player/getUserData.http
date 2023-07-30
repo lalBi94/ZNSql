@@ -2,7 +2,7 @@ POST http://localhost:3001/getUserData
 Content-Type: application/json
 
 {
-    "playerId": "steam_1",
+    "playerId": "fivem:6884688",
     "column": "Player",
-    "value": "lastname"
+    "value": "firstname"
 }

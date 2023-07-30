@@ -2,5 +2,5 @@ POST http://localhost:3001/getUserDatas
 Content-Type: application/json
 
 {
-    "playerId": "steam_2"
+    "playerId": "fivem:6884688"
 }

@@ -2,8 +2,8 @@ POST http://localhost:3001/updateUserData
 Content-Type: application/json
 
 {
-    "playerId": "fivem:867432",
+    "playerId": "fivem:6884688",
     "column": "Player",
     "atomic_value": "lastname",
-    "value": "tesfesfseft123"
+    "value": "RRong"
 }
